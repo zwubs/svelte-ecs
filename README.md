@@ -1,32 +1,17 @@
-# Turborepo Svelte starter
+# Svelte ECS
 
-This is an official starter Turborepo.
+This is a demo repository for creating an ECS in Svelte.
 
-## Using this example
+## Getting Started
 
 Run the following command:
 
 ```sh
-npx create-turbo@latest -e with-svelte
+pnpm install
 ```
 
-## What's inside?
+This will get all your dependencies installed and setup the monorepo.
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [svelte-kit](https://kit.svelte.dev/) app
-- `web`: another [svelte-kit](https://kit.svelte.dev/) app
-- `ui`: a stub Svelte component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-plugin-svelte` and `eslint-config-prettier`)
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+To get started with the demo you have two options
+1. Start up all projects `pnpm dev`
+2. Start up individual projects `cd apps/<DEMO>` & `pnpm dev`
