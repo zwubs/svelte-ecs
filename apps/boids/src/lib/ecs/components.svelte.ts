@@ -23,3 +23,9 @@ export class BoidScoutGroupComponent extends Component {
 export class ColorComponent extends Component {
 	hex = '#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0');
 }
+
+export class TrackMouseComponent extends Component { }
+
+export class KillCountComponent extends Component {
+	kills = $state(0);
+}
