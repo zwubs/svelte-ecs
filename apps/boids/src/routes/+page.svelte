@@ -20,6 +20,8 @@
 	import TrackMouseSystem from '../lib/ecs/systems/TrackMouseSystem.svelte';
 	import AvoidTrackerSystem from '../lib/ecs/systems/AvoidTrackerSystem.svelte';
 	import KillBoidsWithinTrackerRangeSystem from '../lib/ecs/systems/KillBoidsWithinTrackerRangeSystem.svelte';
+	import RenderBoidSystem from '../lib/ecs/systems/RenderBoidSystem.svelte';
+	import RenderTrackerSystem from '../lib/ecs/systems/RenderTrackerSystem.svelte';
 
 	const boids: Entity[] = [];
 	for (let i = 0; i < 100; i++) {
@@ -39,15 +41,7 @@
 
 	const killCount = new KillCountComponent();
 
-	boids.push(
-		createEntity([
-			new BoidComponent(),
-			new PositionComponent(),
-			new VelocityComponent(),
-			new TrackMouseComponent(),
-			killCount
-		])
-	);
+	boids.push(createEntity([new PositionComponent(), new TrackMouseComponent(), killCount]));
 
 	let entities = new Set(boids);
 
@@ -64,7 +58,9 @@
 			<KillBoidsWithinTrackerRangeSystem {updater} {entities} />
 			<MinMaxSpeedSystem {updater} {entities} />
 			<VelocitySystem {updater} {entities} />
-			<RenderSystem {canvas} {updater} {entities} />
+			<RenderSystem {canvas} {updater} />
+			<RenderBoidSystem {canvas} {updater} {entities} />
+			<RenderTrackerSystem {canvas} {updater} {entities} />
 
 			<div class="absolute right-0 top-0 m-4 text-right">
 				<div>Kill Count: {killCount.kills}</div>

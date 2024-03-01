@@ -2,7 +2,7 @@
 	let mouse = $state<{ x: number; y: number }>({ x: 0, y: 0 });
 
 	function handleMouse(event: MouseEvent) {
-		mouse = { x: event.clientX, y: event.clientY };
+		mouse = { x: event.pageX, y: event.pageY };
 	}
 </script>
 
