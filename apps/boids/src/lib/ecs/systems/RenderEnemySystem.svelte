@@ -1,10 +1,6 @@
 <script lang="ts">
 	import type { Canvas } from '../canvas.svelte';
-	import {
-		BoidScoutGroupComponent,
-		PositionComponent,
-		TrackMouseComponent
-	} from '../components.svelte';
+	import { PositionComponent, EnemyComponent } from '../components.svelte';
 	import type { Entity } from '../entity.svelte';
 	import type { Updater } from '../updater.svelte';
 
@@ -16,8 +12,8 @@
 	updater.add(() => {
 		entities.forEach((entity) => {
 			const position = entity.componentsByConstructor.get(PositionComponent) as PositionComponent;
-			const hasTracking = entity.componentsByConstructor.has(TrackMouseComponent);
-			if (!position || !hasTracking) return;
+			const isEnemey = entity.componentsByConstructor.has(EnemyComponent);
+			if (!position || !isEnemey) return;
 			canvas.context.lineCap = 'round';
 			canvas.context.beginPath();
 			canvas.context.strokeStyle = '#F44';

@@ -5,8 +5,9 @@
 		BoidComponent,
 		KillCountComponent,
 		PositionComponent,
-		TrackMouseComponent,
-		VelocityComponent
+		VelocityComponent,
+		EnemyComponent,
+		ChaseMouseComponent
 	} from '$lib/ecs/components.svelte';
 	import { createEntity, type Entity } from '$lib/ecs/entity.svelte';
 	import Canvas from '$lib/ecs/components/Canvas.svelte';
@@ -17,11 +18,11 @@
 	import EdgeDeterentSystem from '../lib/ecs/systems/EdgeDeterentSystem.svelte';
 	import MinMaxSpeedSystem from '../lib/ecs/systems/MinMaxSpeedSystem.svelte';
 	import Mouse from '../lib/ecs/components/Mouse.svelte';
-	import TrackMouseSystem from '../lib/ecs/systems/TrackMouseSystem.svelte';
-	import AvoidTrackerSystem from '../lib/ecs/systems/AvoidTrackerSystem.svelte';
+	import ChaseMouseSystem from '../lib/ecs/systems/ChaseMouseSystem.svelte';
+	import AvoidEnemySystem from '../lib/ecs/systems/AvoidEnemySystem.svelte';
 	import KillBoidsWithinTrackerRangeSystem from '../lib/ecs/systems/KillBoidsWithinTrackerRangeSystem.svelte';
 	import RenderBoidSystem from '../lib/ecs/systems/RenderBoidSystem.svelte';
-	import RenderTrackerSystem from '../lib/ecs/systems/RenderTrackerSystem.svelte';
+	import RenderEnemySystem from '../lib/ecs/systems/RenderEnemySystem.svelte';
 
 	const boids: Entity[] = [];
 	for (let i = 0; i < 100; i++) {
@@ -41,7 +42,15 @@
 
 	const killCount = new KillCountComponent();
 
-	boids.push(createEntity([new PositionComponent(), new TrackMouseComponent(), killCount]));
+	boids.push(
+		createEntity([
+			new PositionComponent(),
+			new VelocityComponent(),
+			new EnemyComponent(),
+			new ChaseMouseComponent(0.25),
+			killCount
+		])
+	);
 
 	let entities = new Set(boids);
 
@@ -50,17 +59,17 @@
 
 <Canvas let:canvas>
 	{#if !!canvas}
-		<Mouse let:mouse>
-			<TrackMouseSystem {mouse} {updater} {entities} />
+		<Mouse let:mouse {canvas}>
+			<ChaseMouseSystem {mouse} {updater} {entities} />
 			<BoidSystem {updater} {entities} />
 			<EdgeDeterentSystem {canvas} {updater} {entities} />
-			<AvoidTrackerSystem {updater} {entities} />
+			<AvoidEnemySystem {updater} {entities} />
 			<KillBoidsWithinTrackerRangeSystem {updater} {entities} />
 			<MinMaxSpeedSystem {updater} {entities} />
 			<VelocitySystem {updater} {entities} />
 			<RenderSystem {canvas} {updater} />
 			<RenderBoidSystem {canvas} {updater} {entities} />
-			<RenderTrackerSystem {canvas} {updater} {entities} />
+			<RenderEnemySystem {canvas} {updater} {entities} />
 
 			<div class="absolute right-0 top-0 m-4 text-right">
 				<div>Kill Count: {killCount.kills}</div>

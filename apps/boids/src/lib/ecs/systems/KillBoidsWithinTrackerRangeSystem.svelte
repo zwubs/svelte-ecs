@@ -3,7 +3,8 @@
 		BoidComponent,
 		KillCountComponent,
 		PositionComponent,
-		TrackMouseComponent
+		ChaseMouseComponent,
+		EnemyComponent
 	} from '../components.svelte';
 	import type { Entity } from '../entity.svelte';
 	import type { Updater } from '../updater.svelte';
@@ -18,14 +19,12 @@
 
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const shouldTrackMouse = entity.componentsByConstructor.has(
-				TrackMouseComponent
-			) as TrackMouseComponent;
+			const isEnemy = entity.componentsByConstructor.has(EnemyComponent);
 			const position = entity.componentsByConstructor.get(PositionComponent) as PositionComponent;
 			const killCount = entity.componentsByConstructor.get(KillCountComponent) as
 				| KillCountComponent
 				| undefined;
-			if (!shouldTrackMouse || !position) return;
+			if (!isEnemy || !position) return;
 			entities.forEach((otherEntity) => {
 				const otherBoidComponent = otherEntity.componentsByConstructor.get(BoidComponent);
 				if (!otherBoidComponent || otherEntity == entity) return;

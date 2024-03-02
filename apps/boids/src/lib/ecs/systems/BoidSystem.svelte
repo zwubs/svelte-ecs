@@ -31,8 +31,12 @@
 				if (!otherEntity.componentsByConstructor.has(BoidComponent)) return;
 				if (otherEntity == boid) return;
 				const otherBoid = otherEntity;
-				const otherPosition = otherBoid.componentsByConstructor.get(PositionComponent) as PositionComponent;
-				const otherVelocity = otherBoid.componentsByConstructor.get(VelocityComponent) as VelocityComponent;
+				const otherPosition = otherBoid.componentsByConstructor.get(
+					PositionComponent
+				) as PositionComponent;
+				const otherVelocity = otherBoid.componentsByConstructor.get(
+					VelocityComponent
+				) as VelocityComponent;
 				const dx = position.x - otherPosition.x;
 				const dy = position.y - otherPosition.y;
 
@@ -50,14 +54,17 @@
 					}
 				}
 			});
+
 			if (neighboringBoids > 0) {
 				xPosAvg /= neighboringBoids;
 				yPosAvg /= neighboringBoids;
 				xVelAvg /= neighboringBoids;
 				yVelAvg /= neighboringBoids;
 
-				velocity.x += (xPosAvg - position.x) * centeringFactor + (xVelAvg - velocity.x) * matchingFactor;
-				velocity.y += (yPosAvg - position.y) * centeringFactor + (yVelAvg - velocity.y) * matchingFactor;
+				velocity.x +=
+					(xPosAvg - position.x) * centeringFactor + (xVelAvg - velocity.x) * matchingFactor;
+				velocity.y +=
+					(yPosAvg - position.y) * centeringFactor + (yVelAvg - velocity.y) * matchingFactor;
 			}
 			velocity.x += closeDx * avoidingFactor;
 			velocity.y += closeDy * avoidingFactor;

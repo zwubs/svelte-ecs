@@ -2,8 +2,9 @@
 	import {
 		BoidComponent,
 		PositionComponent,
-		TrackMouseComponent,
-		VelocityComponent
+		ChaseMouseComponent,
+		VelocityComponent,
+		EnemyComponent
 	} from '../components.svelte';
 	import type { Entity } from '../entity.svelte';
 	import type { Updater } from '../updater.svelte';
@@ -18,27 +19,25 @@
 	}>();
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const shouldTrackMouse = entity.componentsByConstructor.has(
-				TrackMouseComponent
-			) as TrackMouseComponent;
+			const isEnemey = entity.componentsByConstructor.has(EnemyComponent);
 			const position = entity.componentsByConstructor.get(PositionComponent) as PositionComponent;
-			if (!shouldTrackMouse || !position) return;
+			if (!isEnemey || !position) return;
 			entities.forEach((otherEntity) => {
-				if (!otherEntity.componentsByConstructor.has(BoidComponent)) return;
 				if (otherEntity == entity) return;
-				const otherBoid = otherEntity;
-				const otherPosition = otherBoid.componentsByConstructor.get(
+				const otherPosition = otherEntity.componentsByConstructor.get(
 					PositionComponent
 				) as PositionComponent;
-				const otherVelocity = otherBoid.componentsByConstructor.get(
+				const otherVelocity = otherEntity.componentsByConstructor.get(
 					VelocityComponent
 				) as VelocityComponent;
+				const otherIsEnemy = otherEntity.componentsByConstructor.has(EnemyComponent);
+
 				const dx = position.x - otherPosition.x;
 				const dy = position.y - otherPosition.y;
 
 				const squaredDistance = dx * dx + dy * dy;
 
-				if (squaredDistance < avoidenceRangeSquared) {
+				if (squaredDistance < (otherIsEnemy ? avoidenceRangeSquared / 5 : avoidenceRangeSquared)) {
 					if (Math.sign(dx) > 0) otherVelocity.x -= turnFactor;
 					else otherVelocity.x += turnFactor;
 					if (Math.sign(dy) > 0) otherVelocity.y -= turnFactor;

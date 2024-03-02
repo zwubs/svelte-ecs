@@ -1,30 +1,38 @@
 import { Component } from './component.svelte';
 
 export class PositionComponent extends Component {
-	x = 0;
-	y = 0;
+	constructor(
+		public x: number = 0,
+		public y: number = 0
+	) {
+		super();
+	}
 }
 
 export class VelocityComponent extends Component {
-	x = 0;
-	y = 0;
+	constructor(
+		public x: number = 0,
+		public y: number = 0
+	) {
+		super();
+	}
 }
 
 export class BoidComponent extends Component { }
-
-export class BoidBiasComponent extends Component {
-	bias = Math.random() / 100;
-}
-
-export class BoidScoutGroupComponent extends Component {
-	group = Math.round(Math.random()) + 1;
-}
 
 export class ColorComponent extends Component {
 	hex = '#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0');
 }
 
-export class TrackMouseComponent extends Component { }
+export class EnemyComponent extends Component { }
+
+export class ChaseMouseComponent extends Component {
+	constructor(
+		public bias: number = 0.25,
+	) {
+		super();
+	}
+}
 
 export class KillCountComponent extends Component {
 	kills = $state(0);

@@ -9,7 +9,9 @@
 	let { updater, entities } = $props<{ updater: Updater; entities: Set<Entity> }>();
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const velocity = entity.componentsByConstructor.get(VelocityComponent) as VelocityComponent | undefined;
+			const velocity = entity.componentsByConstructor.get(VelocityComponent) as
+				| VelocityComponent
+				| undefined;
 			if (!velocity) return;
 			const speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
 			if (speed < minSpeed) {
