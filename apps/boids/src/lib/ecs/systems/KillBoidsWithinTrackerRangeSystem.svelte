@@ -3,7 +3,6 @@
 		BoidComponent,
 		KillCountComponent,
 		PositionComponent,
-		ChaseMouseComponent,
 		EnemyComponent
 	} from '../components.svelte';
 	import type { Entity } from '../entity.svelte';
@@ -15,28 +14,24 @@
 	}>();
 
 	const killRange = 25;
-	const killRangeSquared = Math.pow(killRange, 2);
 
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const isEnemy = entity.componentsByConstructor.has(EnemyComponent);
-			const position = entity.componentsByConstructor.get(PositionComponent) as PositionComponent;
-			const killCount = entity.componentsByConstructor.get(KillCountComponent) as
-				| KillCountComponent
-				| undefined;
+			const isEnemy = entity.has(EnemyComponent);
+			const position = entity.get(PositionComponent);
+			const killCount = entity.get(KillCountComponent);
 			if (!isEnemy || !position) return;
 			entities.forEach((otherEntity) => {
-				const otherBoidComponent = otherEntity.componentsByConstructor.get(BoidComponent);
+				const otherBoidComponent = otherEntity.get(BoidComponent);
 				if (!otherBoidComponent || otherEntity == entity) return;
-				const otherPosition = otherEntity.componentsByConstructor.get(
-					PositionComponent
-				) as PositionComponent;
+				const otherPosition = otherEntity.get(PositionComponent);
+				if (!otherPosition) return;
 				const dx = position.x - otherPosition.x;
 				const dy = position.y - otherPosition.y;
 
-				const squaredDistance = dx * dx + dy * dy;
+				const distance = Math.sqrt(dx * dx + dy * dy);
 
-				if (squaredDistance < killRangeSquared) {
+				if (distance < killRange) {
 					entities.delete(otherEntity);
 					if (killCount) killCount.kills += 1;
 				}

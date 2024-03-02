@@ -7,8 +7,8 @@ export const createEntity = (initialComponents: Component[]) => {
     let componentsByConstructor = new Map(components.map((component) => ([component.constructor as typeof Component, component])));
 
     return {
-        get components() { return components; },
-        get componentsByConstructor() { return componentsByConstructor; },
+        get<T extends Component>(component: new () => T) { return componentsByConstructor.get(component) as T | undefined },
+        has<T extends Component>(component: new () => T) { return componentsByConstructor.has(component) },
         add(componentToAdd: Component) { components.push(componentToAdd); },
         delete(componentToDelete: Component) { components = components.filter(component => component !== componentToDelete) }
     }

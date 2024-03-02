@@ -14,14 +14,10 @@
 	}>();
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const isBoid = entity.componentsByConstructor.has(BoidComponent);
+			const isBoid = entity.has(BoidComponent);
 			if (!isBoid) return;
-			const position = entity.componentsByConstructor.get(PositionComponent) as
-				| PositionComponent
-				| undefined;
-			const velocity = entity.componentsByConstructor.get(VelocityComponent) as
-				| VelocityComponent
-				| undefined;
+			const position = entity.get(PositionComponent);
+			const velocity = entity.get(VelocityComponent);
 			if (!position || !velocity) return;
 			if (position.x < margin) velocity.x += turnFactor;
 			else if (position.x > canvas.width - margin) velocity.x -= turnFactor;

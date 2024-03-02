@@ -1,5 +1,10 @@
 <script lang="ts">
-	import { ColorComponent, PositionComponent, SizeComponent, VelocityComponent } from '$lib/ecs/components.svelte';
+	import {
+		ColorComponent,
+		PositionComponent,
+		SizeComponent,
+		VelocityComponent
+	} from '$lib/ecs/components.svelte';
 	import { createEntity } from '$lib/ecs/entity.svelte';
 	import Gui from '$lib/gui/Gui.svelte';
 	import Canvas from '$lib/ecs/components/Canvas.svelte';
@@ -12,15 +17,32 @@
 	import RandomizeColorOnBounceSystem from '../lib/ecs/systems/RandomizeColorOnBounceSystem.svelte';
 	import RotationalVelocitySystem from '../lib/ecs/systems/RotationalVelocitySystem.svelte';
 
-	let entity = $state(createEntity([new PositionComponent(), new VelocityComponent(), new ColorComponent(), new SizeComponent()]));
-	let entities = $derived(new Set([entity]));
+	let entity = $state(
+		createEntity([
+			new PositionComponent(),
+			new VelocityComponent(),
+			new ColorComponent(),
+			new SizeComponent()
+		])
+	);
+	let entities = $derived(
+		new Set([
+			entity,
+			createEntity([
+				new PositionComponent(),
+				new VelocityComponent(),
+				new ColorComponent(),
+				new SizeComponent()
+			])
+		])
+	);
 
 	const updater = createUpdater();
 </script>
 
 <Canvas let:canvas>
 	{#if !!canvas}
-		<Gui bind:entity {canvas} />
+		<Gui {canvas} {entities} bind:entity />
 		<VelocitySystem {updater} {entities} />
 		<RotationalVelocitySystem {updater} {entities} />
 		<EdgeBounceSystem {canvas} {updater} {entities} />

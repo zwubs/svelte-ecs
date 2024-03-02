@@ -10,7 +10,6 @@
 	import type { Updater } from '../updater.svelte';
 
 	const avoidenceRange = 300;
-	const avoidenceRangeSquared = Math.pow(avoidenceRange, 2);
 	let turnFactor = 0.5;
 
 	let { updater, entities } = $props<{
@@ -19,25 +18,21 @@
 	}>();
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const isEnemey = entity.componentsByConstructor.has(EnemyComponent);
-			const position = entity.componentsByConstructor.get(PositionComponent) as PositionComponent;
+			const isEnemey = entity.has(EnemyComponent);
+			const position = entity.get(PositionComponent);
 			if (!isEnemey || !position) return;
 			entities.forEach((otherEntity) => {
 				if (otherEntity == entity) return;
-				const otherPosition = otherEntity.componentsByConstructor.get(
-					PositionComponent
-				) as PositionComponent;
-				const otherVelocity = otherEntity.componentsByConstructor.get(
-					VelocityComponent
-				) as VelocityComponent;
-				const otherIsEnemy = otherEntity.componentsByConstructor.has(EnemyComponent);
+				const otherPosition = otherEntity.get(PositionComponent);
+				const otherVelocity = otherEntity.get(VelocityComponent);
+				if (!otherPosition || !otherVelocity) return;
 
 				const dx = position.x - otherPosition.x;
 				const dy = position.y - otherPosition.y;
 
-				const squaredDistance = dx * dx + dy * dy;
+				const distance = Math.sqrt(dx * dx + dy * dy);
 
-				if (squaredDistance < (otherIsEnemy ? avoidenceRangeSquared / 5 : avoidenceRangeSquared)) {
+				if (distance < avoidenceRange) {
 					if (Math.sign(dx) > 0) otherVelocity.x -= turnFactor;
 					else otherVelocity.x += turnFactor;
 					if (Math.sign(dy) > 0) otherVelocity.y -= turnFactor;

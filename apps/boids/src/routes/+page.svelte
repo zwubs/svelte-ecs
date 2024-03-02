@@ -31,10 +31,10 @@
 			new PositionComponent(),
 			new VelocityComponent()
 		]);
-		const position = entity.componentsByConstructor.get(PositionComponent) as PositionComponent;
+		const position = entity.get(PositionComponent) as PositionComponent;
 		position.x = Math.floor(Math.random() * 1000);
 		position.y = Math.floor(Math.random() * 1000);
-		const velocity = entity.componentsByConstructor.get(VelocityComponent) as VelocityComponent;
+		const velocity = entity.get(VelocityComponent) as VelocityComponent;
 		velocity.x = Math.floor(Math.random() * 30 - 15);
 		velocity.y = Math.floor(Math.random() * 30 - 15);
 		boids.push(entity);

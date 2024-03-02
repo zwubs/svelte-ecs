@@ -15,9 +15,9 @@
 	let { updater, entities } = $props<{ updater: Updater; entities: Set<Entity> }>();
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const position = entity.componentsByConstructor.get(PositionComponent) as PositionComponent;
-			const velocity = entity.componentsByConstructor.get(VelocityComponent) as VelocityComponent;
-			const isBoid = entity.componentsByConstructor.has(BoidComponent);
+			const position = entity.get(PositionComponent);
+			const velocity = entity.get(VelocityComponent);
+			const isBoid = entity.has(BoidComponent);
 			if (!position || !velocity || !isBoid) return;
 			const boid = entity;
 			let closeDx = 0,
@@ -28,15 +28,12 @@
 				yVelAvg = 0,
 				neighboringBoids = 0;
 			entities.forEach((otherEntity) => {
-				if (!otherEntity.componentsByConstructor.has(BoidComponent)) return;
+				if (!otherEntity.has(BoidComponent)) return;
 				if (otherEntity == boid) return;
 				const otherBoid = otherEntity;
-				const otherPosition = otherBoid.componentsByConstructor.get(
-					PositionComponent
-				) as PositionComponent;
-				const otherVelocity = otherBoid.componentsByConstructor.get(
-					VelocityComponent
-				) as VelocityComponent;
+				const otherPosition = otherBoid.get(PositionComponent);
+				const otherVelocity = otherBoid.get(VelocityComponent);
+				if (!otherPosition || !otherVelocity) return;
 				const dx = position.x - otherPosition.x;
 				const dy = position.y - otherPosition.y;
 

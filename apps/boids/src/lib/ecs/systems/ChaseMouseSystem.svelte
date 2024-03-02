@@ -11,13 +11,11 @@
 
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const chaseMouse = entity.componentsByConstructor.get(
-				ChaseMouseComponent
-			) as ChaseMouseComponent;
+			const chaseMouse = entity.get(ChaseMouseComponent);
 			if (!chaseMouse) return;
 
-			const position = entity.componentsByConstructor.get(PositionComponent) as PositionComponent;
-			const velocity = entity.componentsByConstructor.get(VelocityComponent) as VelocityComponent;
+			const position = entity.get(PositionComponent);
+			const velocity = entity.get(VelocityComponent);
 			if (!position || !velocity) return;
 			const dx = position.x - mouse.x;
 			const dy = position.y - mouse.y;

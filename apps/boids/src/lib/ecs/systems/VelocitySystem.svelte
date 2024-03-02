@@ -6,8 +6,8 @@
 	let { updater, entities } = $props<{ updater: Updater; entities: Set<Entity> }>();
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const position = entity.componentsByConstructor.get(PositionComponent) as PositionComponent;
-			const velocity = entity.componentsByConstructor.get(VelocityComponent) as VelocityComponent;
+			const position = entity.get(PositionComponent);
+			const velocity = entity.get(VelocityComponent);
 			if (!position || !velocity) return;
 			position.x += velocity.x;
 			position.y += velocity.y;

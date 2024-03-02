@@ -11,8 +11,8 @@
 	}>();
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const position = entity.componentsByConstructor.get(PositionComponent) as PositionComponent;
-			const isEnemey = entity.componentsByConstructor.has(EnemyComponent);
+			const position = entity.get(PositionComponent);
+			const isEnemey = entity.has(EnemyComponent);
 			if (!position || !isEnemey) return;
 			canvas.context.lineCap = 'round';
 			canvas.context.beginPath();
