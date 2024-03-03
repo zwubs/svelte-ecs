@@ -6,7 +6,6 @@
 </script>
 
 <select class="select flex-1" bind:value={selected} disabled={entities.size === 0}>
-	<option value=""></option>
 	{#each entities as entity}
 		<option value={entity} selected={selected == entity}>{entity}</option>
 	{/each}

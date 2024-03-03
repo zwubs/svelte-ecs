@@ -38,6 +38,7 @@
 		<option value={name} selected={selected == name}>{name}</option>
 	{/each}
 </select>
+
 <button
 	class="btn-icon btn-icon-sm variant-filled-primary rounded-container-token"
 	on:click={AddComponent}

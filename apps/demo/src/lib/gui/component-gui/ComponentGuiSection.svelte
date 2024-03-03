@@ -27,22 +27,18 @@
 	import RandomizeColorOnBounceIcon from 'virtual:icons/lucide/swatch-book';
 	import BounceIcon from 'virtual:icons/lucide/arrow-up-from-line';
 	import RotationalComponentGuiItem from './items/RotationalComponentGuiItem.svelte';
+	import GuiSection from '../GuiSection.svelte';
 
 	type Props = { entity: Entity; canvas: Canvas };
 	let { entity, canvas } = $props<Props>();
-
-	let card = $state<HTMLElement>();
 </script>
 
-<div class="card w-full flex flex-col variant-ghost-surface max-h-[90vh]" bind:this={card}>
-	<hgroup class="p-4">
-		<h1 class="h4 font-bold flex gap-2">
-			<ComponentIcon width="1.5rem" height="1.5rem" /><span>Components</span>
-		</h1>
-		<p class="text-surface-100 text-sm">Data currently attached to the entity.</p>
-	</hgroup>
-	<hr />
-	<Accordion spacing="space-y-2 overflow-y-auto p-4">
+<GuiSection
+	icon={ComponentIcon}
+	title="Components"
+	description="Data currently attached to the entity."
+>
+	<Accordion spacing="space-y-2 p-4">
 		{#each entity.components as component}
 			{#if !(component instanceof HiddenComponent)}
 				<div class="flex flex-row items-center gap-4">
@@ -74,7 +70,7 @@
 	<footer class="flex flex-row items-center gap-4 p-4">
 		<GuiAddComponent bind:entity />
 	</footer>
-</div>
+</GuiSection>
 
 <style>
 	#color {
