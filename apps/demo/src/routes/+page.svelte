@@ -6,7 +6,7 @@
 		VelocityComponent
 	} from '$lib/ecs/components.svelte';
 	import { createEntity } from '$lib/ecs/entity.svelte';
-	import Gui from '$lib/gui/Gui.svelte';
+	import GuiDrawer from '$lib/gui/GuiDrawer.svelte';
 	import Canvas from '$lib/ecs/components/Canvas.svelte';
 	import { createUpdater } from '../lib/ecs/updater.svelte';
 	import RenderSystem from '../lib/ecs/systems/RenderSystem.svelte';
@@ -25,24 +25,14 @@
 			new SizeComponent()
 		])
 	);
-	let entities = $derived(
-		new Set([
-			entity,
-			createEntity([
-				new PositionComponent(),
-				new VelocityComponent(),
-				new ColorComponent(),
-				new SizeComponent()
-			])
-		])
-	);
+	let entities = $derived(new Set([entity]));
 
 	const updater = createUpdater();
 </script>
 
 <Canvas let:canvas>
 	{#if !!canvas}
-		<Gui {canvas} {entities} bind:entity />
+		<GuiDrawer {canvas} {entities} bind:entity />
 		<VelocitySystem {updater} {entities} />
 		<RotationalVelocitySystem {updater} {entities} />
 		<EdgeBounceSystem {canvas} {updater} {entities} />
