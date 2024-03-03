@@ -20,7 +20,7 @@
 			<p class="text-surface-100 text-sm">{description}</p>
 		</hgroup>
 		<button
-			class="btn-icon hover:bg-surface-hover-token mr-4 self-center"
+			class="btn-icon hover:bg-surface-hover-token self-center"
 			on:click={() => (open = !open)}
 		>
 			<ChevronUpIcon
