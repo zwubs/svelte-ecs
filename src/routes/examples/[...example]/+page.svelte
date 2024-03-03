@@ -1,3 +1,4 @@
+<!-- Stolen with <3 from Threlte -->
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
