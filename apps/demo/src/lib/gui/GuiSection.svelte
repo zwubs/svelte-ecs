@@ -13,12 +13,10 @@
 </script>
 
 <section class="card w-full flex flex-col variant-ghost-surface">
-	<header class="flex">
-		<hgroup class="flex-1 p-4">
-			<h1 class="h4 font-bold flex gap-2">
-				<svelte:component this={icon} color="#ffffff" width="1.5rem" height="1.5rem" />
-				<span>{title}</span>
-			</h1>
+	<header class="flex p-4 items-center gap-3">
+		<svelte:component this={icon} color="#ffffff" width="1.75rem" height="1.75rem" />
+		<hgroup class="flex-1">
+			<h1 class="h4 font-bold">{title}</h1>
 			<p class="text-surface-100 text-sm">{description}</p>
 		</hgroup>
 		<button

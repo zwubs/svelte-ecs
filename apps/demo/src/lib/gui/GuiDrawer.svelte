@@ -31,7 +31,7 @@
 	position="right"
 	duration={500}
 	width="w-auto"
-	height="h-min"
+	height="h-min max-h-full"
 	bgDrawer="bg-transparent"
 	bgBackdrop="bg-transparent"
 	shadow="shadow-none"
