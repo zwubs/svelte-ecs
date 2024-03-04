@@ -16,7 +16,7 @@
 	let { entity } = $props<{ entity: Entity }>();
 
 	let activeComponentNames = $derived(
-		new Set(entity.components.map((component) => component.constructor.name))
+		new Set(entity.componentsByConstructors.map((component) => component.constructor.name))
 	);
 	let availableComponentNames = $derived(
 		componentNames.filter((name) => !activeComponentNames.has(name))

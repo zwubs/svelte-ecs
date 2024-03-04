@@ -8,14 +8,14 @@
 		ChaseMouseComponent
 	} from './components.svelte';
 	import { createEntity, type Entity } from '$lib/ecs/entity.svelte';
-	import Canvas from '$lib/ecs/components/Canvas.svelte';
+	import Canvas from '$lib/ecs/globals/Canvas.svelte';
+	import Mouse from '$lib/ecs/globals/Mouse.svelte';
 	import { createUpdater } from '$lib/ecs/updater.svelte';
 	import RenderSystem from './systems/RenderSystem.svelte';
 	import VelocitySystem from './systems/VelocitySystem.svelte';
 	import BoidSystem from './systems/BoidSystem.svelte';
 	import EdgeDeterentSystem from './systems/EdgeDeterentSystem.svelte';
 	import MinMaxSpeedSystem from './systems/MinMaxSpeedSystem.svelte';
-	import Mouse from '$lib/ecs/components/Mouse.svelte';
 	import ChaseMouseSystem from './systems/ChaseMouseSystem.svelte';
 	import AvoidEnemySystem from './systems/AvoidEnemySystem.svelte';
 	import KillBoidsWithinTrackerRangeSystem from './systems/KillBoidsWithinTrackerRangeSystem.svelte';

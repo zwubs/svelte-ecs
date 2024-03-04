@@ -8,7 +8,7 @@
 		VelocityComponent
 	} from './components.svelte';
 	import { createEntity, type Entity } from '$lib/ecs/entity.svelte';
-	import Canvas from '$lib/ecs/components/Canvas.svelte';
+	import Canvas from '$lib/ecs/globals/Canvas.svelte';
 	import { createUpdater } from '$lib/ecs/updater.svelte';
 	import RenderSystem from './systems/RenderSystem.svelte';
 	import VelocitySystem from './systems/VelocitySystem.svelte';

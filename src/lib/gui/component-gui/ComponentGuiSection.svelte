@@ -70,6 +70,10 @@
 					<GuiDeleteComponent bind:entity {component} />
 				</div>
 			{/if}
+		{:else}
+			<div class="w-full text-center p-2">
+				<p class="text-surface-300 text-sm">Nothing to see here.</p>
+			</div>
 		{/each}
 	</Accordion>
 	<hr />

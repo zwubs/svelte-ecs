@@ -6,9 +6,9 @@
 		VelocityComponent
 	} from './components.svelte';
 	import * as Components from './components.svelte';
-	import { createEntity } from '$lib/ecs/entity.svelte';
+	import { Entity } from '$lib/ecs/entity.svelte';
 	import GuiDrawer from '$lib/gui/GuiDrawer.svelte';
-	import Canvas from '$lib/ecs/components/Canvas.svelte';
+	import Canvas from '$lib/ecs/globals/Canvas.svelte';
 	import { createUpdater } from '$lib/ecs/updater.svelte';
 	import RenderSystem from './systems/RenderSystem.svelte';
 	import VelocitySystem from './systems/VelocitySystem.svelte';
@@ -19,14 +19,14 @@
 	import RotationalVelocitySystem from './systems/RotationalVelocitySystem.svelte';
 
 	let entity = $state(
-		createEntity([
+		new Entity([
 			new PositionComponent(),
 			new VelocityComponent(),
 			new ColorComponent(),
 			new SizeComponent()
 		])
 	);
-	let entities = $derived(new Set([entity]));
+	let entities = new Set([entity]);
 
 	const updater = createUpdater();
 
@@ -35,7 +35,7 @@
 
 <Canvas let:canvas>
 	{#if !!canvas}
-		<GuiDrawer {canvas} {entities} {components} bind:entity />
+		<GuiDrawer {canvas} {entities} />
 		<VelocitySystem {updater} {entities} />
 		<RotationalVelocitySystem {updater} {entities} />
 		<EdgeBounceSystem {canvas} {updater} {entities} />

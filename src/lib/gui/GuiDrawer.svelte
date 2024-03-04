@@ -1,18 +1,17 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import type { Entity } from '../ecs/entity.svelte';
+	import { Entity } from '../ecs/entity.svelte';
 	import type { Canvas } from '../ecs/canvas.svelte';
 	import ComponentGuiSection from './component-gui/ComponentGuiSection.svelte';
 	import EntityGuiSection from './entity-gui/EntityGuiSection.svelte';
 	import MenuIcon from 'virtual:icons/lucide/menu';
 	import { Accordion, Drawer, getDrawerStore } from '@skeletonlabs/skeleton';
 	import SystemGuiSection from './system-gui/SystemGuiSection.svelte';
-	import { Component } from '$lib/ecs/component.svelte';
 
-	export let entity: Entity;
-	export let entities: Set<Entity>;
-	export let canvas: Canvas;
-	export let components: (typeof Component)[];
+	type GuiDrawerProps = { entities: Set<Entity>; canvas: Canvas };
+	let { entities, canvas } = $props<GuiDrawerProps>();
+
+	let entity = $state(new Entity());
 
 	const drawerStore = getDrawerStore();
 	drawerStore.open();
