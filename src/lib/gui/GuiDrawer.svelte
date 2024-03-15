@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { Entity } from '../ecs/entity.svelte';
+	import { Entity, StatefulEntity } from '../ecs/entity.svelte';
 	import type { Canvas } from '../ecs/canvas.svelte';
 	import ComponentGuiSection from './component-gui/ComponentGuiSection.svelte';
 	import EntityGuiSection from './entity-gui/EntityGuiSection.svelte';
@@ -11,7 +11,7 @@
 	type GuiDrawerProps = { entities: Set<Entity>; canvas: Canvas };
 	let { entities, canvas } = $props<GuiDrawerProps>();
 
-	let entity = $state(new Entity());
+	let entity = $state<Entity>([...entities.values()][0]);
 
 	const drawerStore = getDrawerStore();
 	drawerStore.open();
@@ -39,7 +39,7 @@
 >
 	<Accordion width="w-[28rem]" class="flex flex-col gap-4 p-4 max-w-md">
 		<EntityGuiSection {entities} bind:entity />
-		<ComponentGuiSection bind:entity {canvas} />
+		<ComponentGuiSection {entity} {canvas} />
 		<SystemGuiSection />
 	</Accordion>
 </Drawer>

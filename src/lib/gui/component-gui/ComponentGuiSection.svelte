@@ -30,8 +30,11 @@
 	import RotationalComponentGuiItem from './items/RotationalComponentGuiItem.svelte';
 	import GuiSection from '../GuiSection.svelte';
 
-	type Props = { entity: Entity; canvas: Canvas };
+	type Props = { entity?: Entity; canvas: Canvas };
 	let { entity, canvas } = $props<Props>();
+	$effect(() => {
+		if (entity) console.log(entity);
+	});
 </script>
 
 <GuiSection
@@ -40,41 +43,47 @@
 	description="Data currently attached to the entity."
 >
 	<Accordion spacing="space-y-2 p-4">
-		{#each entity.components as component}
-			{#if !(component instanceof HiddenComponent)}
-				<div class="flex flex-row items-center gap-4">
-					{#if component instanceof PositionComponent}
-						<PositionComponentGuiItem position={component} {canvas} />
-					{:else if component instanceof VelocityComponent}
-						<VelocityComponentGuiItem velocity={component} />
-					{:else if component instanceof RotationComponent}
-						<RotationComponentGuiItem rotation={component} />
-					{:else if component instanceof ColorComponent}
-						<ColorComponentGuiItem color={component} />
-					{:else if component instanceof BounceComponent}
-						<EmptyComponentGuiItem title="Bounce" icon={BounceIcon} />
-					{:else if component instanceof SizeComponent}
-						<SizeComponentGuiItem size={component} />
-					{:else if component instanceof ScoreComponent}
-						<ScoreComponentGuiItem score={component} />
-					{:else if component instanceof RandomizeColorOnBounceComponent}
-						<EmptyComponentGuiItem
-							title="Randomize Color On Bounce"
-							icon={RandomizeColorOnBounceIcon}
-						/>
-					{:else if component instanceof RotationalVelocityComponent}
-						<RotationalComponentGuiItem rotationalVelocity={component} />
-					{:else}
-						<EmptyComponentGuiItem title={component.constructor.name} icon={UnknownIcon} />
-					{/if}
-					<GuiDeleteComponent bind:entity {component} />
-				</div>
-			{/if}
-		{:else}
+		{#if entity === undefined}
 			<div class="w-full text-center p-2">
-				<p class="text-surface-300 text-sm">Nothing to see here.</p>
+				<p class="text-surface-300 text-sm">No entity selected.</p>
 			</div>
-		{/each}
+		{:else}
+			{#each entity.components as component}
+				{#if !(component instanceof HiddenComponent)}
+					<div class="flex flex-row items-center gap-4">
+						{#if component instanceof PositionComponent}
+							<PositionComponentGuiItem position={component} {canvas} />
+						{:else if component instanceof VelocityComponent}
+							<VelocityComponentGuiItem velocity={component} />
+						{:else if component instanceof RotationComponent}
+							<RotationComponentGuiItem rotation={component} />
+						{:else if component instanceof ColorComponent}
+							<ColorComponentGuiItem color={component} />
+						{:else if component instanceof BounceComponent}
+							<EmptyComponentGuiItem title="Bounce" icon={BounceIcon} />
+						{:else if component instanceof SizeComponent}
+							<SizeComponentGuiItem size={component} />
+						{:else if component instanceof ScoreComponent}
+							<ScoreComponentGuiItem score={component} />
+						{:else if component instanceof RandomizeColorOnBounceComponent}
+							<EmptyComponentGuiItem
+								title="Randomize Color On Bounce"
+								icon={RandomizeColorOnBounceIcon}
+							/>
+						{:else if component instanceof RotationalVelocityComponent}
+							<RotationalComponentGuiItem rotationalVelocity={component} />
+						{:else}
+							<EmptyComponentGuiItem title={component.constructor.name} icon={UnknownIcon} />
+						{/if}
+						<GuiDeleteComponent {entity} {component} />
+					</div>
+				{/if}
+			{:else}
+				<div class="w-full text-center p-2">
+					<p class="text-surface-300 text-sm">Nothing to see here.</p>
+				</div>
+			{/each}
+		{/if}
 	</Accordion>
 	<hr />
 	<footer class="flex flex-row items-center gap-4 p-4">

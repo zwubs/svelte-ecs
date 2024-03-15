@@ -1,14 +1,16 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { createCanvas } from '../canvas.svelte';
+	import { getContext, onMount, setContext } from 'svelte';
+	import { createCanvas, type Canvas } from '../canvas.svelte';
 
-	let canvas = $state<ReturnType<typeof createCanvas>>();
+	let canvas = $state<Canvas>();
 	let element = $state<HTMLCanvasElement>();
 
 	onMount(() => {
 		if (!element) throw new Error('No canvas element');
 		canvas = createCanvas(element);
+		setContext('canvas', canvas);
 		handleResize();
+		console.log(getContext('canvas'));
 	});
 
 	function handleResize() {

@@ -26,7 +26,7 @@ export class Entity {
         this.componentsByConstructors.set(component.constructor as ComponentConstructor, component);
     }
 
-    delete(component: Component) {
+    public delete(component: Component) {
         this.componentsByConstructors.delete(component.constructor as ComponentConstructor)
     }
 
@@ -34,6 +34,10 @@ export class Entity {
 }
 
 export class StatefulEntity extends Entity {
+
+    constructor(components: Component[]) {
+        super(components);
+    }
 
     public componentArray: Component[] = $state([])
     public componentsByConstructor = $derived(
@@ -49,6 +53,20 @@ export class StatefulEntity extends Entity {
             throw new Error(`Can't create a ${this.name} from a ${entity.constructor.name}`);
         const components = entity.components.map(component => new StatefulComponent(component));
         return new StatefulEntity(components);
+    }
+
+    static toEntity(entity: StatefulEntity) {
+        return new Entity(entity.componentArray);
+    }
+
+    public add(component: Component) {
+        this.componentArray.push(component);
+    }
+
+    public delete(component: Component) {
+        const index = this.componentArray.indexOf(component)
+        if (index == -1) return;
+        this.componentArray.splice(index, 1);
     }
 
     get components() { return this.componentArray; }
