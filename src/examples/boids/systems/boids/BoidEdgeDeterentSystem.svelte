@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Canvas } from '$lib/ecs/canvas.svelte';
-	import { BoidComponent, PositionComponent, VelocityComponent } from '../components.svelte';
+	import { BoidComponent, PositionComponent, VelocityComponent } from '../../components.svelte';
 	import type { Entity } from '$lib/ecs/entity.svelte';
 	import type { Updater } from '$lib/ecs/updater.svelte';
 

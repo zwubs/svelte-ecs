@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PositionComponent, VelocityComponent, EnemyComponent } from '../components.svelte';
+	import { PositionComponent, VelocityComponent, PlayerComponent } from '../../components.svelte';
 	import type { Entity } from '$lib/ecs/entity.svelte';
 	import type { Updater } from '$lib/ecs/updater.svelte';
 
@@ -12,9 +12,9 @@
 	}>();
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const isEnemey = entity.has(EnemyComponent);
+			const isPlayer = entity.has(PlayerComponent);
 			const position = entity.get(PositionComponent);
-			if (!isEnemey || !position) return;
+			if (!isPlayer || !position) return;
 			entities.forEach((otherEntity) => {
 				if (otherEntity == entity) return;
 				const otherPosition = otherEntity.get(PositionComponent);

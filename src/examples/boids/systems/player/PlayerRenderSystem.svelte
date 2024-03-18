@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Canvas } from '$lib/ecs/canvas.svelte';
-	import { BoidComponent, EnemyComponent, PositionComponent } from '../components.svelte';
+	import { PositionComponent, PlayerComponent } from '../../components.svelte';
 	import type { Entity } from '$lib/ecs/entity.svelte';
 	import type { Updater } from '$lib/ecs/updater.svelte';
 
@@ -12,15 +12,14 @@
 	updater.add(() => {
 		entities.forEach((entity) => {
 			const position = entity.get(PositionComponent);
-			const isBoid = entity.has(BoidComponent);
-			const isEnemey = entity.has(EnemyComponent);
-			if (!position || !isBoid || isEnemey) return;
+			const isPlayer = entity.has(PlayerComponent);
+			if (!position || !isPlayer) return;
 			canvas.context.lineCap = 'round';
 			canvas.context.beginPath();
-			canvas.context.strokeStyle = '#FFF';
+			canvas.context.strokeStyle = '#F44';
 			canvas.context.lineWidth = 2;
 			canvas.context.beginPath();
-			canvas.context.arc(position.x, position.y, 2, 0, 2 * Math.PI);
+			canvas.context.arc(position.x, position.y, 10, 0, 2 * Math.PI);
 			canvas.context.stroke();
 		});
 	});

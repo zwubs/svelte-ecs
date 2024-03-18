@@ -3,8 +3,8 @@
 		BoidComponent,
 		KillCountComponent,
 		PositionComponent,
-		EnemyComponent
-	} from '../components.svelte';
+		PlayerComponent
+	} from '../../components.svelte';
 	import type { Entity } from '$lib/ecs/entity.svelte';
 	import type { Updater } from '$lib/ecs/updater.svelte';
 
@@ -17,10 +17,10 @@
 
 	updater.add(() => {
 		entities.forEach((entity) => {
-			const isEnemy = entity.has(EnemyComponent);
+			const isPlayer = entity.has(PlayerComponent);
 			const position = entity.get(PositionComponent);
 			const killCount = entity.get(KillCountComponent);
-			if (!isEnemy || !position) return;
+			if (!isPlayer || !position) return;
 			entities.forEach((otherEntity) => {
 				const otherBoidComponent = otherEntity.get(BoidComponent);
 				if (!otherBoidComponent || otherEntity == entity) return;

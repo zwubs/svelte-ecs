@@ -24,7 +24,7 @@ export class ColorComponent extends Component {
 	hex = '#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0');
 }
 
-export class EnemyComponent extends Component { }
+export class PlayerComponent extends Component { }
 
 export class ChaseMouseComponent extends Component {
 	constructor(
@@ -35,5 +35,13 @@ export class ChaseMouseComponent extends Component {
 }
 
 export class KillCountComponent extends Component {
-	kills = 0;
+	kills = $state(0);
+}
+
+export class ChirpComponent extends Component {
+	private static max = 600;
+	private _counter = (Math.random() * ChirpComponent.max);
+
+	get counter() { return this._counter; }
+	set counter(value: number) { this._counter = Math.max(value, ChirpComponent.max); }
 }

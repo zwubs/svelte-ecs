@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { VelocityComponent } from '../components.svelte';
+	import { BoidComponent, VelocityComponent } from '../../components.svelte';
 	import type { Entity } from '$lib/ecs/entity.svelte';
 	import type { Updater } from '$lib/ecs/updater.svelte';
 
@@ -9,8 +9,9 @@
 	let { updater, entities } = $props<{ updater: Updater; entities: Set<Entity> }>();
 	updater.add(() => {
 		entities.forEach((entity) => {
+			const isBoid = entity.has(BoidComponent);
 			const velocity = entity.get(VelocityComponent);
-			if (!velocity) return;
+			if (!velocity || !isBoid) return;
 			const speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
 			if (speed < minSpeed) {
 				velocity.x = (velocity.x / speed) * minSpeed;
