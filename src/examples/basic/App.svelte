@@ -33,12 +33,14 @@
 </script>
 
 <Globals>
-	<!-- <GuiDrawer {canvas} bind:entities />
-	<VelocitySystem {updater} {entities} />
-	<RotationalVelocitySystem {updater} {entities} />
-	<EdgeBounceSystem {canvas} {updater} {entities} />
-	<EdgeCollisionSystem {canvas} {updater} {entities} />
-	<ScoreOnBounceSystem {updater} {entities} />
-	<RandomizeColorOnBounceSystem {updater} {entities} />
-	<RenderSystem {canvas} {updater} {entities} /> -->
+	{#snippet globalsDependents({ canvas })}
+		<GuiDrawer {canvas} bind:entities />
+		<VelocitySystem {updater} {entities} />
+		<RotationalVelocitySystem {updater} {entities} />
+		<EdgeBounceSystem {canvas} {updater} {entities} />
+		<EdgeCollisionSystem {canvas} {updater} {entities} />
+		<ScoreOnBounceSystem {updater} {entities} />
+		<RandomizeColorOnBounceSystem {updater} {entities} />
+		<RenderSystem {canvas} {updater} {entities} />
+	{/snippet}
 </Globals>

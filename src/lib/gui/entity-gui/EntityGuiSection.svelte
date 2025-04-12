@@ -5,7 +5,7 @@
 	import GuiSection from '../GuiSection.svelte';
 
 	type Props = { entity: Entity; entities: Set<Entity> };
-	let { entity, entities } = $props<Props>();
+	let { entity = $bindable(), entities }: Props = $props();
 </script>
 
 <GuiSection icon={EntityIcon} title="Entities" description="Select an entity to start editting.">

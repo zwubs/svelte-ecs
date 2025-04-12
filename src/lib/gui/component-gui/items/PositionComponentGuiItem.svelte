@@ -2,10 +2,10 @@
 	import PositionIcon from 'virtual:icons/lucide/locate-fixed';
 	import ComponentGuiItem from '../ComponentGuiItem.svelte';
 	import type { PositionComponent } from '../../../ecs/components.svelte';
-	import type { Canvas } from '../../../ecs/canvas.svelte';
+	import type { Globals } from '../../../ecs/globals/Globals.svelte';
 
-	type Props = { position: PositionComponent; canvas: Canvas };
-	let { position, canvas } = $props<Props>();
+	type Props = { position: PositionComponent } & Pick<Globals, 'canvas'>;
+	let { position, canvas }: Props = $props();
 </script>
 
 <ComponentGuiItem title="Position" icon={PositionIcon}>

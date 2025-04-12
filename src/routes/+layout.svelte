@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { initializeDrawerStore } from '$lib/drawer';
 	import '../app.postcss';
-	import { initializeStores } from '@skeletonlabs/skeleton';
 
-	initializeStores();
+	initializeDrawerStore();
 </script>
 
 <slot />

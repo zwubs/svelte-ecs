@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { Entity, StatefulEntity } from '../ecs/entity.svelte';
-	import type { Canvas } from '../ecs/canvas.svelte';
 	import ComponentGuiSection from './component-gui/ComponentGuiSection.svelte';
 	import EntityGuiSection from './entity-gui/EntityGuiSection.svelte';
 	import MenuIcon from 'virtual:icons/lucide/menu';
 	import { Accordion, Drawer, getDrawerStore } from '@skeletonlabs/skeleton';
 	import SystemGuiSection from './system-gui/SystemGuiSection.svelte';
+	import type { Globals } from '$lib/ecs/globals/Globals.svelte';
 
-	type GuiDrawerProps = { entities: Set<Entity>; canvas: Canvas };
-	let { entities, canvas } = $props<GuiDrawerProps>();
+	type GuiDrawerProps = { entities: Set<Entity> } & Pick<Globals, 'canvas'>;
+	let { entities = $bindable(), canvas }: GuiDrawerProps = $props();
 
 	let entity = $state<Entity>([...entities.values()][0]);
 
@@ -22,7 +22,7 @@
 		type="button"
 		class="btn-icon variant-ghost absolute right-0 top-0 m-4"
 		transition:fade={{ duration: 250 }}
-		on:click={() => drawerStore.open()}
+		onclick={() => drawerStore.open()}
 	>
 		<MenuIcon />
 	</button>

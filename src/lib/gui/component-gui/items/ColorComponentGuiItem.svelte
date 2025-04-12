@@ -4,7 +4,7 @@
 	import type { ColorComponent } from '../../../ecs/components.svelte';
 
 	type Props = { color: ColorComponent };
-	let { color } = $props<Props>();
+	let { color }: Props = $props();
 </script>
 
 <ComponentGuiItem title="Color" icon={ColorIcon}>

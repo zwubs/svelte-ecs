@@ -7,7 +7,7 @@
 		EnemyComponent,
 		ChaseMouseComponent
 	} from './components.svelte';
-	import { createEntity, type Entity } from '$lib/ecs/entity.svelte';
+	import { Entity } from '$lib/ecs/entity.svelte';
 	import Canvas from '$lib/ecs/globals/Canvas.svelte';
 	import Mouse from '$lib/ecs/globals/Mouse.svelte';
 	import { createUpdater } from '$lib/ecs/updater.svelte';
@@ -21,10 +21,11 @@
 	import KillBoidsWithinTrackerRangeSystem from './systems/KillBoidsWithinTrackerRangeSystem.svelte';
 	import RenderBoidSystem from './systems/RenderBoidSystem.svelte';
 	import RenderEnemySystem from './systems/RenderEnemySystem.svelte';
+	import Globals from '$lib/ecs/globals/Globals.svelte';
 
 	const boids: Entity[] = [];
 	for (let i = 0; i < 100; i++) {
-		let entity = createEntity([
+		let entity = new Entity([
 			new BoidComponent(),
 			new PositionComponent(),
 			new VelocityComponent()
@@ -41,7 +42,7 @@
 	const killCount = new KillCountComponent();
 
 	boids.push(
-		createEntity([
+		new Entity([
 			new PositionComponent(),
 			new VelocityComponent(),
 			new EnemyComponent(),
@@ -55,9 +56,8 @@
 	const updater = createUpdater();
 </script>
 
-<Canvas let:canvas>
-	{#if !!canvas}
-		<Mouse let:mouse {canvas}>
+<Globals>
+	{#snippet globalsDependents({ canvas, mouse })}
 			<ChaseMouseSystem {mouse} {updater} {entities} />
 			<BoidSystem {updater} {entities} />
 			<EdgeDeterentSystem {canvas} {updater} {entities} />
@@ -73,6 +73,5 @@
 				<div>Kill Count: {killCount.kills}</div>
 				<div>Boids Alive: {entities.size - 1}</div>
 			</div>
-		</Mouse>
-	{/if}
-</Canvas>
+	{/snippet}
+</Globals>

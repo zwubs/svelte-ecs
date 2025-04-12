@@ -13,7 +13,7 @@
 	);
 	const componentNames = Array.from(componentsByName.keys());
 
-	let { entity } = $props<{ entity?: Entity }>();
+	let { entity = $bindable() }: { entity?: Entity } = $props();
 
 	let activeComponentNames = $derived(
 		new Set(entity?.components.map((component) => component.constructor.name))

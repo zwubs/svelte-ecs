@@ -1,9 +1,17 @@
+<script module>
+	export type MousePosition = { x: number; y: number };
+</script>
+
 <script lang="ts">
-	import type { Canvas } from '../canvas.svelte';
+	import type { Snippet } from 'svelte';
+	import type { CanvasData } from './Canvas.svelte';
 
-	let { canvas } = $props<{ canvas: Canvas }>();
+	let { canvas, mouseDependents } = $props<{
+		canvas: CanvasData;
+		mouseDependents?: Snippet<[{ mouse: MousePosition }]>;
+	}>();
 
-	let mouse = $state<{ x: number; y: number }>({ x: canvas.width / 2, y: canvas.height / 2 });
+	let mouse = $state<MousePosition>({ x: canvas.width / 2, y: canvas.height / 2 });
 
 	function handleMouse(event: MouseEvent) {
 		mouse = { x: event.pageX, y: event.pageY };
@@ -12,4 +20,6 @@
 
 <svelte:window on:mousemove={handleMouse} />
 
-<slot {mouse} />
+{#if mouseDependents !== undefined}
+	{@render mouseDependents({ mouse } )}
+{/if}

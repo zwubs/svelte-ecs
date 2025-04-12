@@ -4,7 +4,7 @@
 	import type { SizeComponent } from '../../../ecs/components.svelte';
 
 	type Props = { size: SizeComponent };
-	let { size } = $props<Props>();
+	let { size }: Props = $props();
 </script>
 
 <ComponentGuiItem title="Size" icon={SizeIcon}>

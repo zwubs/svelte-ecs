@@ -1,11 +1,11 @@
 <script lang="ts">
 	import ChevronDownIcon from 'virtual:icons/lucide/chevron-down';
 	import ChevronUpIcon from 'virtual:icons/lucide/chevron-up';
-	import type { ComponentType } from 'svelte';
+	import type { Component } from 'svelte';
 	import { AccordionItem } from '@skeletonlabs/skeleton';
 
-	export let icon: ComponentType;
-	export let title: string;
+	type Props = { icon: Component; title: string };
+	let { icon, title }: Props = $props();
 </script>
 
 <AccordionItem regionPanel="w-full" class="flex-1" caretClosed="rotate-90">

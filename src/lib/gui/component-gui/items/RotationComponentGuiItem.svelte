@@ -4,7 +4,7 @@
 	import type { RotationComponent } from '../../../ecs/components.svelte';
 
 	type Props = { rotation: RotationComponent };
-	let { rotation } = $props<Props>();
+	let { rotation }: Props = $props();
 </script>
 
 <ComponentGuiItem title="Rotation" icon={RotationIcon}>

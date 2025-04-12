@@ -7,7 +7,7 @@
 		PositionComponent,
 		VelocityComponent
 	} from './components.svelte';
-	import { createEntity, type Entity } from '$lib/ecs/entity.svelte';
+	import { Entity } from '$lib/ecs/entity.svelte';
 	import Canvas from '$lib/ecs/globals/Canvas.svelte';
 	import { createUpdater } from '$lib/ecs/updater.svelte';
 	import RenderSystem from './systems/RenderSystem.svelte';
@@ -16,16 +16,17 @@
 	import NBodySystem from './systems/NBodySystem.svelte';
 	import TrailSystem from './systems/TrailSystem.svelte';
 	import RenderNameSystem from './systems/RenderNameSystem.svelte';
+	import Globals from '$lib/ecs/globals/Globals.svelte';
 
 	const entityArray: Entity[] = [
-		createEntity([
+		new Entity([
 			new NameComponent('Sun'),
 			new MassComponent(1),
 			new PositionComponent(-1.50324727873647e-6, -3.93762725944737e-6, -4.86567877183925e-8),
 			new VelocityComponent(3.1669325898331e-5, -6.85489559263319e-6, -7.90076642683254e-7),
 			new AccelerationComponent(0, 0)
 		]),
-		createEntity([
+		new Entity([
 			new NameComponent('Earth'),
 			new MassComponent(3.0024584e-6),
 			new PositionComponent(0.648778995445634, 0.747796691108466, 0.00951633403684172),
@@ -33,7 +34,7 @@
 			new AccelerationComponent(0, 0),
 			new PerviousPositionsComponent(40, 4)
 		]),
-		createEntity([
+		new Entity([
 			new NameComponent('Mercury'),
 			new MassComponent(1.65956463e-7),
 			new PositionComponent(-0.346390408691506, -0.272465544507684, 0.0192761582256879),
@@ -41,7 +42,7 @@
 			new AccelerationComponent(0, 0),
 			new PerviousPositionsComponent(20, 4)
 		]),
-		createEntity([
+		new Entity([
 			new NameComponent('Venus'),
 			new MassComponent(2.44699613e-6),
 			new PositionComponent(-0.168003526072526, 0.698844725464528, -3.22953591923124e-5),
@@ -49,7 +50,7 @@
 			new AccelerationComponent(0, 0),
 			new PerviousPositionsComponent(30, 4)
 		]),
-		createEntity([
+		new Entity([
 			new NameComponent('Mars'),
 			new MassComponent(3.213e-7),
 			new PositionComponent(-0.574871406752105, -1.395455041953879, -0.01515164037265145),
@@ -64,13 +65,13 @@
 	const updater = createUpdater();
 </script>
 
-<Canvas let:canvas>
-	{#if !!canvas}
+<Globals>
+	{#snippet globalsDependents({ canvas, mouse })}
 		<NBodySystem {updater} {entities} />
 		<AccelerationSystem {updater} {entities} />
 		<VelocitySystem {updater} {entities} />
 		<RenderSystem {canvas} {updater} {entities} />
 		<TrailSystem {canvas} {updater} {entities} />
 		<RenderNameSystem {canvas} {updater} {entities} />
-	{/if}
-</Canvas>
+	{/snippet}
+</Globals>

@@ -17,7 +17,7 @@
 	import RotationComponentGuiItem from './items/RotationComponentGuiItem.svelte';
 	import ComponentIcon from 'virtual:icons/lucide/shapes';
 	import SizeComponentGuiItem from './items/SizeComponentGuiItem.svelte';
-	import type { Canvas } from '../../ecs/canvas.svelte';
+	import type { Globals } from '../../ecs/globals/Globals.svelte';
 	import GuiAddComponent from './ComponentGuiAdd.svelte';
 	import GuiDeleteComponent from './ComponentGuiDelete.svelte';
 	import ScoreComponentGuiItem from './items/ScoreComponentGuiItem.svelte';
@@ -30,8 +30,8 @@
 	import RotationalComponentGuiItem from './items/RotationalComponentGuiItem.svelte';
 	import GuiSection from '../GuiSection.svelte';
 
-	type Props = { entity?: Entity; canvas: Canvas };
-	let { entity, canvas } = $props<Props>();
+	type Props = { entity?: Entity } & Pick<Globals, 'canvas'>;
+	let { entity = $bindable(), canvas }: Props = $props();
 	$effect(() => {
 		if (entity) console.log(entity);
 	});

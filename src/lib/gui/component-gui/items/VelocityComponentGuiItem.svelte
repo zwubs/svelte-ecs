@@ -4,7 +4,7 @@
 	import type { VelocityComponent } from '../../../ecs/components.svelte';
 
 	type Props = { velocity: VelocityComponent };
-	let { velocity } = $props<Props>();
+	let { velocity }: Props = $props();
 </script>
 
 <ComponentGuiItem title="Velocity" icon={VelocityIcon}>
